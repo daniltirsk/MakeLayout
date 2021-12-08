@@ -27,8 +27,16 @@ class MainActivity : AppCompatActivity() {
                         layoutParams = params
                     })
         }
-
-        val rows = ArrayList<LinearLayout>()
+        val rows = Array(4, { LinearLayout(applicationContext)})
+        var count = 0
+        for (view in catViews) {
+            val row: Int = count / 4
+            rows[row].addView(view)
+            count ++
+        }
+        for (row in rows) {
+            layout.addView(row)
+        }
         // TODO: 1) заполнить 4 строки элементами из массива catViews по 4 штуки в ряду
  /*
         val cat2 = ImageView(applicationContext)
