@@ -19,12 +19,21 @@ class MainActivity : AppCompatActivity() {
         val params = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
         params.weight = 1.toFloat() // единичный вес
 
+        // TODO: 3) реализовать переворот карт с "рубашки" на лицевую сторону и обратно
+        val colorListener = View.OnClickListener() {
+            it.setBackgroundColor(Color.YELLOW)
+        }
+
         val catViews = ArrayList<ImageView>()
+
+        // TODO: 2) случайным образом разместить 8 пар картинок
+
         for (i in 1..16) {
             catViews.add( // вызываем конструктор для создания нового ImageView
                     ImageView(applicationContext).apply {
                         setImageResource(R.drawable.squarecat)
                         layoutParams = params
+                        setOnClickListener(colorListener)
                     })
         }
         val rows = Array(4, { LinearLayout(applicationContext)})
@@ -37,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         for (row in rows) {
             layout.addView(row)
         }
+
         // TODO: 1) заполнить 4 строки элементами из массива catViews по 4 штуки в ряду
  /*
         val cat2 = ImageView(applicationContext)
