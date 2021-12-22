@@ -9,6 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,8 +25,12 @@ class MainActivity : AppCompatActivity() {
 
         // TODO: 3) реализовать переворот карт с "рубашки" на лицевую сторону и обратно
         val colorListener = View.OnClickListener() {
-            it.setBackgroundColor(Color.YELLOW)
+            GlobalScope.launch (Dispatchers.Main)
+                { setBackgroundWithDelay(it) }
+            //it.setBackgroundColor(Color.YELLOW)
+
         }
+
 
         val catViews = ArrayList<ImageView>()
 
@@ -34,6 +42,7 @@ class MainActivity : AppCompatActivity() {
                         setImageResource(R.drawable.squarecat)
                         layoutParams = params
                         setOnClickListener(colorListener)
+
                     })
         }
         val rows = Array(4, { LinearLayout(applicationContext)})
@@ -75,5 +84,17 @@ class MainActivity : AppCompatActivity() {
   */
         setContentView(layout)
         //setContentView(R.layout.activity_main)
+    }
+
+    suspend fun setBackgroundWithDelay(v: View) {
+        delay(1000)
+        v.setBackgroundColor(Color.YELLOW)
+        delay(1000)
+        v.visibility = View.INVISIBLE
+        v.isClickable = false
+    }
+
+    suspend fun openCards() {
+
     }
 }
